@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneGuardian | Anti-Theft Protection for Urban Students & Young Adults</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0B0F19',
+                        darkCard: 'rgba(17, 24, 39, 0.7)',
+                        electricCyan: '#00F2FE',
+                        cyberBlue: '#4FACFE',
+                        vividPurple: '#7F00FF',
+                        neonCoral: '#FF007A',
+                        neonGreen: '#00FF87'
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        cyanGlow: '0 0 25px rgba(0, 242, 254, 0.35)',
+                        purpleGlow: '0 0 25px rgba(127, 0, 255, 0.35)',
+                        coralGlow: '0 0 25px rgba(255, 0, 122, 0.35)',
+                        glass: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0F19;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Glassmorphism */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(22, 30, 49, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 242, 254, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.25);
+        }
+
+        /* Cyber Gradients & Text */
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #A855F7 0%, #7F00FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-coral {
+            background: linear-gradient(135deg, #FF007A 0%, #FF758C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-cyber-gradient {
+            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 50%, #7F00FF 100%);
+        }
+
+        /* Radar Pulse Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .radar-pulse {
+            animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        /* Scanline Effect for Device Graphic */
+        .scanline {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #00F2FE, transparent);
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: scan 4s linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F293D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F2FE;
+        }
+    </style>
+</head>
+<body class="relative antialiased selection:bg-electricCyan selection:text-obsidian">
+
+    <!-- Background Ambient Glow Effects -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-electricCyan/10 rounded-full filter blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed top-1/3 right-10 w-96 h-96 bg-vividPurple/15 rounded-full filter blur-[140px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-10 left-10 w-80 h-80 bg-neonCoral/10 rounded-full filter blur-[130px] pointer-events-none z-0"></div>
+
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="relative w-10 h-10 rounded-xl bg-cyber-gradient flex items-center justify-center p-0.5 shadow-cyanGlow transition-transform group-hover:scale-105">
+                    <div class="w-full h-full bg-obsidian rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-electricCyan text-xl"></i>
+                    </div>
+                </div>
+                <span class="font-syne text-2xl font-bold tracking-tight text-white">
+                    Phone<span class="text-electricCyan">Guardian</span>
+                </span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#problem" class="hover:text-electricCyan transition-colors">The Threat</a>
+                <a href="#features" class="hover:text-electricCyan transition-colors">Features</a>
+                <a href="#simulator" class="hover:text-electricCyan transition-colors">Live Demo</a>
+                <a href="#pricing" class="hover:text-electricCyan transition-colors">Pricing</a>
+                <a href="#testimonials" class="hover:text-electricCyan transition-colors">Campus Trust</a>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button onclick="openModal('contactModal')" class="text-sm font-semibold text-gray-300 hover:text-white px-4 py-2 transition">
+                    Support
+                </button>
+                <a href="#pricing" class="relative group overflow-hidden rounded-full p-[1px] font-semibold text-sm">
+                    <span class="absolute inset-0 bg-cyber-gradient transition-all duration-300 group-hover:opacity-90"></span>
+                    <span class="relative block px-6 py-2.5 rounded-full bg-obsidian text-white transition-colors group-hover:bg-transparent">
+                        Get Protected <i class="fa-solid fa-arrow-right ml-1 text-xs text-electricCyan group-hover:text-white"></i>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-panel border-t border-white/10 px-4 pt-4 pb-6 space-y-3">
+            <a href="#problem" class="block py-2 text-gray-300 hover:text-electricCyan">The Threat</a>
+            <a href="#features" class="block py-2 text-gray-300 hover:text-electricCyan">Features</a>
+            <a href="#simulator" class="block py-2 text-gray-300 hover:text-electricCyan">Live Demo</a>
+            <a href="#pricing" class="block py-2 text-gray-300 hover:text-electricCyan">Pricing</a>
+            <a href="#testimonials" class="block py-2 text-gray-300 hover:text-electricCyan">Campus Trust</a>
+            <div class="pt-2 flex flex-col space-y-2">
+                <button onclick="openModal('contactModal')" class="w-full text-center py-2 text-sm font-semibold text-gray-300 border border-gray-700 rounded-xl">Contact Us</button>
+                <a href="#pricing" class="w-full text-center py-2.5 text-sm font-semibold text-obsidian bg-electricCyan rounded-xl">Get Protected Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column Text -->
+                <div class="lg:col-span-7 text-center lg:text-left space-y-8">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-panel border border-electricCyan/30 text-xs text-electricCyan font-medium">
+                        <span class="w-2 h-2 rounded-full bg-electricCyan animate-ping"></span>
+                        <span>Built for Campus & Urban Nightlife Safety</span>
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="font-syne text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
+                        Protect Your Phone. <br>
+                        <span class="text-gradient-cyan">Shield Your Digital Life.</span>
+                    </h1>
+
+                    <!-- Subtitle UVP -->
+                    <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        <strong class="text-white">PhoneGuardian</strong> delivers instant anti-theft protection that locks down your device, freezes sensitive banking & social accounts, and tracks stolen phones in real time.
+                    </p>
+
+                    <!-- Call To Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#pricing" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-cyber-gradient text-obsidian font-bold text-base shadow-cyanGlow hover:opacity-95 transition hover:scale-105 text-center">
+                            Start 14-Day Free Trial <i class="fa-solid fa-shield-check ml-2"></i>
+                        </a>
+                        <button onclick="openModal('videoModal')" class="w-full sm:w-auto px-7 py-4 rounded-xl glass-panel border border-white/20 text-white font-semibold text-base hover:bg-white/10 transition flex items-center justify-center space-x-3 group">
+                            <span class="w-8 h-8 rounded-full bg-electricCyan/20 flex items-center justify-center text-electricCyan group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play text-xs"></i>
+                            </span>
+                            <span>Watch 1-Min Demo</span>
+                        </button>
+                    </div>
+
+                    <!-- Micro Trust Indicators -->
+                    <div class="pt-4 flex items-center justify-center lg:justify-start space-x-6 text-xs text-gray-400">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-lock text-electricCyan"></i>
+                            <span>AES-256 Encrypted</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-vividPurple"></i>
+                            <span>100+ University Networks</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-bolt text-neonGreen"></i>
+                            <span>Zero Data Leakage</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column Interactive Mock Dashboard / Phone Visual -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <!-- Glow behind phone -->
+                    <div class="absolute inset-0 bg-cyber-gradient opacity-20 filter blur-3xl rounded-full"></div>
+                    
+                    <!-- Phone Frame Outer Container -->
+                    <div class="relative w-full max-w-[340px] bg-obsidian/90 rounded-[45px] p-4 border-2 border-electricCyan/40 shadow-cyanGlow glass-panel">
+                        <div class="scanline"></div>
+                        
+                        <!-- Top Notch & Speaker -->
+                        <div class="w-32 h-5 bg-obsidian rounded-b-2xl mx-auto mb-3 flex items-center justify-center border-b border-x border-gray-800">
+                            <div class="w-10 h-1 bg-gray-700 rounded-full"></div>
+                        </div>
+
+                        <!-- Live Interactive Dashboard Screen inside Phone -->
+                        <div class="space-y-3 font-sans">
+                            <!-- Status Bar Header -->
+                            <div class="flex justify-between items-center px-2 text-[10px] text-gray-400">
+                                <span><i class="fa-solid fa-wifi text-electricCyan mr-1"></i> PhoneGuardian Live</span>
+                                <span class="text-neonGreen font-semibold"><i class="fa-solid fa-circle text-[8px] animate-pulse"></i> PROTECTED</span>
+                            </div>
+
+                            <!-- Live Map Coordinates Card -->
+                            <div class="p-3 rounded-2xl bg-gray-900/80 border border-electricCyan/30 relative overflow-hidden">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-[10px] text-gray-400 font-mono">CURRENT GPS LOCK</p>
+                                        <p class="text-xs font-bold text-white">Main Campus Quad, Zone 4</p>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded text-[9px] bg-electricCyan/20 text-electricCyan font-mono">ACCURACY 2m</span>
+                                </div>
+                                <div class="h-20 bg-gray-950 rounded-lg relative overflow-hidden flex items-center justify-center border border-gray-800">
+                                    <!-- Simulated Grid Map lines -->
+                                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00F2FE_1px,transparent_1px)] [background-size:12px_12px]"></div>
+                                    <div class="radar-pulse absolute w-12 h-12 rounded-full border border-electricCyan bg-electricCyan/20"></div>
+                                    <div class="relative z-10 w-4 h-4 bg-neonCoral rounded-full border-2 border-white shadow-coralGlow"></div>
+                                </div>
+                            </div>
+
+                            <!-- Security Toggles -->
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-2.5 rounded-xl bg-gray-900/60 border border-gray-800 flex items-center space-x-2">
+                                    <div class="w-7 h-7 rounded-lg bg-electricCyan/10 text-electricCyan flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-semibold text-white">Bank Apps</p>
+                                        <p class="text-[9px] text-neonGreen">Autolocked</p>
+                                    </div>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-gray-900/60 border border-gray-800 flex items-center space-x-2">
+                                    <div class="w-7 h-7 rounded-lg bg-vividPurple/10 text-vividPurple flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-user-shield"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-semibold text-white">Social Vault</p>
+                                        <p class="text-[9px] text-neonGreen">Encrypted</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Silent Alarm & Intruder Status -->
+                            <div class="p-3 rounded-2xl bg-vividPurple/10 border border-vividPurple/30 flex items-center justify-between">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="w-8 h-8 rounded-full bg-vividPurple/20 text-vividPurple flex items-center justify-center">
+                                        <i class="fa-solid fa-camera-retro text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-white">Intruder Selfie Active</p>
+                                        <p class="text-[10px] text-gray-400">Silent snapshot on wrong PIN</p>
+                                    </div>
+                                </div>
+                                <span class="w-2.5 h-2.5 rounded-full bg-neonGreen"></span>
+                            </div>
+
+                            <!-- SOS Quick Button inside demo frame -->
+                            <button onclick="document.getElementById('simulator').scrollIntoView({behavior: 'smooth'})" class="w-full py-2.5 rounded-xl bg-neonCoral/20 border border-neonCoral/50 text-neonCoral font-bold text-xs flex items-center justify-center space-x-2 hover:bg-neonCoral/30 transition">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                <span>Test Emergency Lock Mode</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM VS SOLUTION INFOGRAPHIC SECTION -->
+    <section id="problem" class="py-20 relative border-t border-white/5 bg-gray-950/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-electricCyan">The Urban Phone Threat</h2>
+                <p class="font-syne text-3xl sm:text-4xl font-extrabold text-white">
+                    Losing Your Phone Isn't Just Expensive — It's Dangerous.
+                </p>
+                <p class="text-gray-400 text-sm sm:text-base">
+                    Every 12 seconds, a smartphone is stolen or misplaced in major transit hubs, campus dorms, and nightlife venues.
+                </p>
+            </div>
+
+            <!-- Urban Phone Crisis Stats Infographic Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                <div class="p-6 rounded-2xl glass-card text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-neonCoral/10 text-neonCoral flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-skull-crossbones"></i>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-neonCoral">1 in 3</p>
+                    <p class="text-sm font-semibold text-white">Urban Young Adults Experience Theft or Loss</p>
+                    <p class="text-xs text-gray-400">Crowded subways, library desks, and bars are prime hotspots for swift theft.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl glass-card text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-vividPurple/10 text-vividPurple flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-vividPurple">87%</p>
+                    <p class="text-sm font-semibold text-white">Have Unprotected Banking & Social Apps</p>
+                    <p class="text-xs text-gray-400">Once unlocked, thieves clean out Venmo, Crypto wallets, and leak personal photos.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl glass-card text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-electricCyan/10 text-electricCyan flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-electricCyan">&lt; 15 Mins</p>
+                    <p class="text-sm font-semibold text-white">Critical Window Before Thieves Turn Phone Off</p>
+                    <p class="text-xs text-gray-400">Standard tracking fails the moment Airplane mode or power is toggled.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Toggle: Without vs With PhoneGuardian -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8 pb-6 border-b border-gray-800">
+                    <div>
+                        <h3 class="font-syne text-2xl font-bold text-white">Compare the Outcome</h3>
+                        <p class="text-xs text-gray-400">Toggle below to see how PhoneGuardian changes the story.</p>
+                    </div>
+                    
+                    <!-- Toggle Switch -->
+                    <div class="inline-flex p-1.5 rounded-full bg-gray-900 border border-gray-800">
+                        <button id="toggleWithout" onclick="switchComparison('without')" class="px-5 py-2 rounded-full text-xs font-bold transition bg-neonCoral text-white shadow-coralGlow">
+                            Without PhoneGuardian
+                        </button>
+                        <button id="toggleWith" onclick="switchComparison('with')" class="px-5 py-2 rounded-full text-xs font-bold text-gray-400 hover:text-white transition">
+                            With PhoneGuardian
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Comparison Display Content -->
+                <div id="comparisonContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Dynamic Javascript Content Injected Here -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- KEY FEATURES & BENEFIT GRID -->
+    <section id="features" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-electricCyan">Next-Gen Shield Technology</h2>
+                <p class="font-syne text-3xl sm:text-4xl font-extrabold text-white">
+                    Complete Control Over Your Stolen or Lost Device
+                </p>
+                <p class="text-gray-400 text-sm sm:text-base">
+                    Designed specifically for student budgets and urban lifestyles. Simple to setup, impossible for thieves to bypass.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Feature 1 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-xl bg-electricCyan/10 border border-electricCyan/30 text-electricCyan flex items-center justify-center text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-location-crosshairs"></i>
+                    </div>
+                    <h3 class="font-syne text-lg font-bold text-white">Instant Lock & Live GPS</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Precision tracking down to latitude/longitude coordinates even if location services are toggled off by an intruder.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-2 border-t border-gray-800">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-electricCyan"></i>
+                            <span>Web dashboard live map</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-electricCyan"></i>
+                            <span>Anti-power off safeguard</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-xl bg-vividPurple/10 border border-vividPurple/30 text-vividPurple flex items-center justify-center text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-fingerprint"></i>
+                    </div>
+                    <h3 class="font-syne text-lg font-bold text-white">Biometric Financial Vault</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Instantly freezes access to Venmo, Zelle, Mobile Banking, photos, and social apps the moment lock mode is triggered.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-2 border-t border-gray-800">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-vividPurple"></i>
+                            <span>1-Tap session termination</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-vividPurple"></i>
+                            <span>Cloud data backup buffer</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-xl bg-neonCoral/10 border border-neonCoral/30 text-neonCoral flex items-center justify-center text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-user-secret"></i>
+                    </div>
+                    <h3 class="font-syne text-lg font-bold text-white">Intruder Selfie & Piercing Siren</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Captures silent snapshots of anyone entering an incorrect passcode and emails photo + GPS pin directly to your inbox.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-2 border-t border-gray-800">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-neonCoral"></i>
+                            <span>High-decibel alarm (bypasses silent mode)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-neonCoral"></i>
+                            <span>Front camera stealth capture</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-xl bg-neonGreen/10 border border-neonGreen/30 text-neonGreen flex items-center justify-center text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-bell font-bold"></i>
+                    </div>
+                    <h3 class="font-syne text-lg font-bold text-white">Emergency Circle Alert</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Automatically sends automated SMS alerts with live tracking pins to your trusted roommates, partners, or campus security.
+                    </p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-2 border-t border-gray-800">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-neonGreen"></i>
+                            <span>Up to 5 trusted contacts</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-neonGreen"></i>
+                            <span>Campus police quick-dispatch</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE HOW IT WORKS & SIMULATOR WIDGET -->
+    <section id="simulator" class="py-20 bg-gray-950 border-y border-white/10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-vividPurple/20 text-vividPurple border border-vividPurple/30">
+                    Interactive Tech Demo
+                </span>
+                <h2 class="font-syne text-3xl sm:text-4xl font-extrabold text-white">
+                    See PhoneGuardian in Action Right Now
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Test how quickly our anti-theft cloud engine locks down a device in real time.
+                </p>
+            </div>
+
+            <!-- 3-Step Process Cards Header -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="flex items-center space-x-4 p-4 rounded-xl glass-panel">
+                    <div class="w-10 h-10 rounded-full bg-electricCyan text-obsidian font-bold flex items-center justify-center shrink-0">1</div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Download & Connect</h4>
+                        <p class="text-xs text-gray-400">Install app and define your trusted emergency circle.</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 p-4 rounded-xl glass-panel">
+                    <div class="w-10 h-10 rounded-full bg-vividPurple text-white font-bold flex items-center justify-center shrink-0">2</div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Trigger Remote Guard</h4>
+                        <p class="text-xs text-gray-400">Use any browser or text key from a friend's phone.</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 p-4 rounded-xl glass-panel">
+                    <div class="w-10 h-10 rounded-full bg-neonCoral text-white font-bold flex items-center justify-center shrink-0">3</div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Instant Data Shield</h4>
+                        <p class="text-xs text-gray-400">Phone locks, siren sounds, and location streams live.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATION CONTROL PANEL & MOCK PHONE DISPLAY -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-electricCyan/30 shadow-cyanGlow">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Control Options Left Column -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="space-y-2">
+                            <span class="text-xs font-mono text-electricCyan uppercase">SIMULATOR CONTROL CENTER</span>
+                            <h3 class="font-syne text-2xl font-bold text-white">Simulate a Stolen Phone Scenario</h3>
+                            <p class="text-xs text-gray-300">Click the action buttons below to test how PhoneGuardian responds instantly to unauthorized movement or remote trigger commands.</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <button onclick="runSimulation('lock')" class="w-full text-left p-4 rounded-xl glass-card border border-electricCyan/40 hover:border-electricCyan flex items-center justify-between group transition">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-9 h-9 rounded-lg bg-electricCyan/20 text-electricCyan flex items-center justify-center">
+                                        <i class="fa-solid fa-lock text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">1. Trigger Instant Remote Lock</p>
+                                        <p class="text-[11px] text-gray-400">Freezes phone screen with unbypassable custom message.</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-electricCyan group-hover:translate-x-1 transition"></i>
+                            </button>
+
+                            <button onclick="runSimulation('siren')" class="w-full text-left p-4 rounded-xl glass-card border border-vividPurple/40 hover:border-vividPurple flex items-center justify-between group transition">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-9 h-9 rounded-lg bg-vividPurple/20 text-vividPurple flex items-center justify-center">
+                                        <i class="fa-solid fa-volume-high text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">2. Sound Piercing Anti-Theft Siren</p>
+                                        <p class="text-[11px] text-gray-400">Plays 110dB alarm even if device was muted or on vibrate.</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-vividPurple group-hover:translate-x-1 transition"></i>
+                            </button>
+
+                            <button onclick="runSimulation('wipe')" class="w-full text-left p-4 rounded-xl glass-card border border-neonCoral/40 hover:border-neonCoral flex items-center justify-between group transition">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-9 h-9 rounded-lg bg-neonCoral/20 text-neonCoral flex items-center justify-center">
+                                        <i class="fa-solid fa-trash-can text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">3. Activate Cryptographic Remote Wipe</p>
+                                        <p class="text-[11px] text-gray-400">Securely wipes banking cache while backing up to cloud vault.</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-neonCoral group-hover:translate-x-1 transition"></i>
+                            </button>
+                        </div>
+
+                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 flex items-center space-x-3">
+                            <i class="fa-solid fa-circle-info text-electricCyan text-base"></i>
+                            <p class="text-[11px] text-gray-400">All commands transmit via encrypted SMS fallback even without active Wi-Fi or cellular data.</p>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Output Graphic Right Column -->
+                    <div class="lg:col-span-6 flex justify-center">
+                        <div class="relative w-full max-w-[320px] h-[480px] bg-obsidian rounded-[40px] p-4 border-4 border-gray-800 shadow-2xl overflow-hidden flex flex-col justify-between">
+                            
+                            <!-- Phone Screen Notch -->
+                            <div class="w-24 h-4 bg-gray-900 rounded-b-xl mx-auto flex items-center justify-center">
+                                <div class="w-8 h-1 bg-gray-700 rounded-full"></div>
+                            </div>
+
+                            <!-- Screen Status Body -->
+                            <div id="simScreen" class="my-auto text-center space-y-4 p-4 transition-all duration-300">
+                                <div id="simIcon" class="w-16 h-16 mx-auto rounded-full bg-electricCyan/10 border border-electricCyan text-electricCyan flex items-center justify-center text-2xl">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <h4 id="simTitle" class="font-syne text-xl font-bold text-white">System Ready</h4>
+                                    <p id="simDesc" class="text-xs text-gray-400 mt-1">Select an action on the left to simulate PhoneGuardian response.</p>
+                                </div>
+                                <div id="simBadge" class="inline-block px-3 py-1 rounded-full text-[10px] font-mono bg-gray-800 text-gray-300">
+                                    STATUS: IDLE & PROTECTED
+                                </div>
+                            </div>
+
+                            <!-- Reset Button in phone screen -->
+                            <button onclick="runSimulation('reset')" class="w-full py-2 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 hover:text-white text-xs font-mono transition">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Reset Simulator
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PRICING SECTION TAILORED FOR STUDENTS -->
+    <section id="pricing" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-electricCyan">Flexible & Affordable Plans</h2>
+                <p class="font-syne text-3xl sm:text-4xl font-extrabold text-white">
+                    Protection That Fits Your Budget
+                </p>
+                <p class="text-gray-400 text-sm">
+                    Special discounted rates for verified college students and young adults.
+                </p>
+
+                <!-- Billing Cycle Switcher -->
+                <div class="inline-flex items-center p-1 rounded-full bg-gray-900 border border-gray-800 mt-4">
+                    <button id="btnMonthly" onclick="setBilling('monthly')" class="px-5 py-2 rounded-full text-xs font-bold bg-electricCyan text-obsidian shadow-cyanGlow transition">
+                        Monthly Billing
+                    </button>
+                    <button id="btnAnnual" onclick="setBilling('annual')" class="px-5 py-2 rounded-full text-xs font-bold text-gray-400 hover:text-white transition flex items-center space-x-1">
+                        <span>Annual (Save 25%)</span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] bg-neonGreen/20 text-neonGreen font-mono">2 MONTHS FREE</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                
+                <!-- Tier 1: Student Shield -->
+                <div class="glass-card p-8 rounded-3xl space-y-6 border-2 border-electricCyan/50 relative flex flex-col justify-between">
+                    <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-electricCyan text-obsidian font-bold text-[10px] tracking-wide uppercase">
+                        MOST POPULAR
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-electricCyan text-lg"></i>
+                            <h3 class="font-syne text-xl font-bold text-white">Student Shield</h3>
+                        </div>
+                        <p class="text-xs text-gray-400">Designed for verified university students with campus ID.</p>
+                        
+                        <div class="flex items-baseline space-x-1">
+                            <span id="priceStudent" class="font-syne text-4xl font-extrabold text-white">$2.99</span>
+                            <span class="text-xs text-gray-400">/ month</span>
+                        </div>
+
+                        <ul class="space-y-3 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-electricCyan"></i>
+                                <span>1 Smartphone Protected</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-electricCyan"></i>
+                                <span>Real-Time GPS & Remote Lock</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-electricCyan"></i>
+                                <span>Intruder Selfie & Loud Siren</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-electricCyan"></i>
+                                <span>Banking & Social App Vault</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-electricCyan"></i>
+                                <span>Campus Security Emergency SOS</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openModal('contactModal')" class="w-full py-3.5 rounded-xl bg-electricCyan text-obsidian font-bold text-xs shadow-cyanGlow hover:opacity-90 transition">
+                        Get Student Discount
+                    </button>
+                </div>
+
+                <!-- Tier 2: Guardian Pro -->
+                <div class="glass-card p-8 rounded-3xl space-y-6 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-briefcase text-vividPurple text-lg"></i>
+                            <h3 class="font-syne text-xl font-bold text-white">Guardian Pro</h3>
+                        </div>
+                        <p class="text-xs text-gray-400">For young professionals and urban commuters.</p>
+                        
+                        <div class="flex items-baseline space-x-1">
+                            <span id="pricePro" class="font-syne text-4xl font-extrabold text-white">$5.99</span>
+                            <span class="text-xs text-gray-400">/ month</span>
+                        </div>
+
+                        <ul class="space-y-3 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-vividPurple"></i>
+                                <span>Up to 2 Devices (Phone + Tablet/Laptop)</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-vividPurple"></i>
+                                <span>All Student Shield Features</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-vividPurple"></i>
+                                <span>Encrypted Cloud Backup Vault</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-vividPurple"></i>
+                                <span>SIM Card Swap Instant Alert</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-vividPurple"></i>
+                                <span>24/7 Stolen Device Recovery Concierge</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openModal('contactModal')" class="w-full py-3.5 rounded-xl bg-vividPurple text-white font-bold text-xs hover:opacity-90 transition">
+                        Start 14-Day Free Trial
+                    </button>
+                </div>
+
+                <!-- Tier 3: Circle Group -->
+                <div class="glass-card p-8 rounded-3xl space-y-6 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-users text-neonCoral text-lg"></i>
+                            <h3 class="font-syne text-xl font-bold text-white">Circle / Roommates</h3>
+                        </div>
+                        <p class="text-xs text-gray-400">Share with up to 5 friends, roommates, or family members.</p>
+                        
+                        <div class="flex items-baseline space-x-1">
+                            <span id="priceCircle" class="font-syne text-4xl font-extrabold text-white">$9.99</span>
+                            <span class="text-xs text-gray-400">/ month</span>
+                        </div>
+
+                        <ul class="space-y-3 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-neonCoral"></i>
+                                <span>5 Member Accounts Included</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-neonCoral"></i>
+                                <span>Shared Emergency Response Network</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-neonCoral"></i>
+                                <span>Cross-Device Remote Lock Access</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-neonCoral"></i>
+                                <span>Priority Police Dispatch Assistance</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openModal('contactModal')" class="w-full py-3.5 rounded-xl border border-neonCoral text-neonCoral hover:bg-neonCoral hover:text-white font-bold text-xs transition">
+                        Get Circle Plan
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS & SOCIAL PROOF -->
+    <section id="testimonials" class="py-20 bg-gray-950/60 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-electricCyan">Real Stories, Real Recovery</h2>
+                <p class="font-syne text-3xl sm:text-4xl font-extrabold text-white">
+                    Trusted By 50,000+ Students Nationwide
+                </p>
+            </div>
+
+            <!-- Testimonial Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex text-amber-400 text-xs space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed italic">
+                        "My iPhone was snagged off my table at a crowded campus coffee shop. Within 20 seconds, I logged into PhoneGuardian on my friend's device, locked it, and sent a selfie of the guy straight to campus security!"
+                    </p>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-gray-800">
+                        <div class="w-8 h-8 rounded-full bg-electricCyan/20 text-electricCyan flex items-center justify-center font-bold text-xs">
+                            JL
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Jordan Lee</p>
+                            <p class="text-[10px] text-gray-400">NYU Junior • New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex text-amber-400 text-xs space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed italic">
+                        "The instant bank vault freeze saved me over $3,000 in Venmo and savings accounts when I lost my phone during a concert. PhoneGuardian is an absolute essential for anyone living in the city."
+                    </p>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-gray-800">
+                        <div class="w-8 h-8 rounded-full bg-vividPurple/20 text-vividPurple flex items-center justify-center font-bold text-xs">
+                            AM
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Alex Morgan</p>
+                            <p class="text-[10px] text-gray-400">Software Designer • Chicago, IL</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex text-amber-400 text-xs space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed italic">
+                        "Our whole apartment shares the Circle Plan. It gives us total peace of mind when taking night transit back to our dorms. The 1-Tap SOS pin is genius."
+                    </p>
+                    <div class="flex items-center space-x-3 pt-2 border-t border-gray-800">
+                        <div class="w-8 h-8 rounded-full bg-neonCoral/20 text-neonCoral flex items-center justify-center font-bold text-xs">
+                            SK
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Samantha K.</p>
+                            <p class="text-[10px] text-gray-400">UCLA Senior • Los Angeles, CA</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION BANNER & EMAIL SIGNUP -->
+    <section class="py-16 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-electricCyan/30 relative text-center space-y-6 shadow-cyanGlow">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-cyber-gradient flex items-center justify-center text-obsidian text-2xl font-bold shadow-cyanGlow">
+                    <i class="fa-solid fa-shield-cat"></i>
+                </div>
+                <h2 class="font-syne text-3xl sm:text-4xl font-extrabold text-white">
+                    Protect Your Digital Life Today
+                </h2>
+                <p class="text-gray-300 text-sm max-w-xl mx-auto">
+                    Join thousands of students and young adults who never have to worry about smartphone theft or data breach again.
+                </p>
+
+                <!-- Signup Form -->
+                <form onsubmit="handleSignup(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+                    <input type="email" required placeholder="Enter your email (.edu or personal)" class="px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-electricCyan text-sm grow">
+                    <button type="submit" class="px-6 py-3 rounded-xl bg-electricCyan text-obsidian font-bold text-sm hover:bg-white transition shrink-0">
+                        Claim Free Trial
+                    </button>
+                </form>
+                <p class="text-[11px] text-gray-400">No credit card required for 14-day student trial.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-obsidian border-t border-gray-800 text-gray-400 py-12 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-halved text-electricCyan text-xl"></i>
+                    <span class="font-syne text-lg font-bold text-white">PhoneGuardian</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">
+                    Anti-theft protection designed for urban students and young adults. Lock phones, protect data, and locate devices anywhere.
+                </p>
+                <p class="text-gray-500 text-[11px]">&copy; 2026 PhoneGuardian Inc. All rights reserved.</p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Quick Navigation</h4>
+                <ul class="space-y-2">
+                    <li><a href="#problem" class="hover:text-electricCyan">The Urban Threat</a></li>
+                    <li><a href="#features" class="hover:text-electricCyan">Feature Overview</a></li>
+                    <li><a href="#simulator" class="hover:text-electricCyan">Interactive Simulator</a></li>
+                    <li><a href="#pricing" class="hover:text-electricCyan">Student Pricing</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Contact & Support</h4>
+                <ul class="space-y-2">
+                    <li><i class="fa-solid fa-envelope text-electricCyan mr-2"></i> support@phoneguardian.app</li>
+                    <li><i class="fa-solid fa-phone text-neonGreen mr-2"></i> Emergency Line: 1-800-555-GUARD</li>
+                    <li><i class="fa-solid fa-location-dot text-vividPurple mr-2"></i> Tech Hub Plaza, San Francisco, CA</li>
+                    <li><button onclick="openModal('contactModal')" class="text-electricCyan underline hover:text-white mt-1">Open Live Support Form</button></li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold text-white text-sm mb-1">Stay Connected</h4>
+                <div class="flex space-x-3 text-base">
+                    <a href="#" class="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center hover:bg-electricCyan hover:text-obsidian transition"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center hover:bg-electricCyan hover:text-obsidian transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center hover:bg-electricCyan hover:text-obsidian transition"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center hover:bg-electricCyan hover:text-obsidian transition"><i class="fa-brands fa-discord"></i></a>
+                </div>
+                <div class="pt-2">
+                    <p class="text-[10px] text-gray-500 mb-2">DOWNLOAD THE APP</p>
+                    <div class="flex space-x-2">
+                        <div class="px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 flex items-center space-x-2 text-[10px] text-white">
+                            <i class="fa-brands fa-apple text-sm"></i>
+                            <span>App Store</span>
+                        </div>
+                        <div class="px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-800 flex items-center space-x-2 text-[10px] text-white">
+                            <i class="fa-brands fa-google-play text-sm"></i>
+                            <span>Google Play</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- FLOATING LIVE CHAT HOTLINE BUTTON -->
+    <button onclick="openModal('contactModal')" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-cyber-gradient p-0.5 shadow-cyanGlow hover:scale-110 transition group" title="Emergency Help & Support">
+        <div class="w-full h-full bg-obsidian rounded-full flex items-center justify-center text-electricCyan group-hover:bg-transparent group-hover:text-obsidian transition">
+            <i class="fa-solid fa-headset text-xl"></i>
+        </div>
+    </button>
+
+    <!-- MODAL 1: VIDEO DEMO MODAL -->
+    <div id="videoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/80 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-3xl rounded-3xl p-6 border border-electricCyan/40 relative space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="font-syne text-lg font-bold text-white"><i class="fa-solid fa-circle-play text-electricCyan mr-2"></i> PhoneGuardian Product Tour</h3>
+                <button onclick="closeModal('videoModal')" class="text-gray-400 hover:text-white p-2 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Video Container Mock -->
+            <div class="w-full aspect-video bg-gray-950 rounded-2xl relative flex items-center justify-center overflow-hidden border border-gray-800">
+                <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="relative z-10 text-center space-y-3 p-6">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-electricCyan text-obsidian flex items-center justify-center text-2xl shadow-cyanGlow">
+                        <i class="fa-solid fa-shield"></i>
+                    </div>
+                    <p class="font-syne text-xl font-bold text-white">Watch How Anti-Theft Defense Triggers in 3 Seconds</p>
+                    <p class="text-xs text-gray-300 max-w-md mx-auto">See real-world testing in urban subways, university dorms, and night venues.</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <button onclick="closeModal('videoModal')" class="px-5 py-2 rounded-xl bg-electricCyan text-obsidian font-bold text-xs">Close Preview</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CONTACT & SUPPORT FORM MODAL -->
+    <div id="contactModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian/80 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-8 border border-electricCyan/40 relative space-y-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-headset text-electricCyan text-xl"></i>
+                    <h3 class="font-syne text-lg font-bold text-white">Contact PhoneGuardian</h3>
+                </div>
+                <button onclick="closeModal('contactModal')" class="text-gray-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-gray-300">Need help activating student discounts or recovering a missing phone? Send us a message.</p>
+
+            <form onsubmit="handleContactSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-gray-400 mb-1">Your Name</label>
+                    <input type="text" required placeholder="Alex Rivera" class="w-full px-3 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-electricCyan">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Email (.edu or personal)</label>
+                    <input type="email" required placeholder="alex@university.edu" class="w-full px-3 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-electricCyan">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Inquiry Type</label>
+                    <select class="w-full px-3 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-electricCyan">
+                        <option>Emergency Stolen Phone Assistance</option>
+                        <option>Student Verification Discount</option>
+                        <option>General Support Question</option>
+                        <option>Campus Security Partnership</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Message</label>
+                    <textarea rows="3" required placeholder="How can we help you protect your device?" class="w-full px-3 py-2.5 rounded-xl bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-electricCyan"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-electricCyan text-obsidian font-bold text-xs shadow-cyanGlow hover:opacity-90 transition">
+                    Send Message <i class="fa-solid fa-paper-plane ml-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed top-24 right-6 z-50 hidden glass-panel px-5 py-3 rounded-2xl border border-electricCyan text-white text-xs flex items-center space-x-3 shadow-cyanGlow">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-electricCyan text-base"></i>
+        <span id="toastMsg">Action completed successfully.</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Modal Helpers
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Notification Toast
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = message;
+            if(isError) {
+                toastIcon.className = 'fa-solid fa-triangle-exclamation text-neonCoral text-base';
+                toast.classList.replace('border-electricCyan', 'border-neonCoral');
+            } else {
+                toastIcon.className = 'fa-solid fa-circle-check text-electricCyan text-base';
+                toast.classList.replace('border-neonCoral', 'border-electricCyan');
+            }
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        // Handle Signup
+        function handleSignup(e) {
+            e.preventDefault();
+            showToast("Welcome to PhoneGuardian! Your 14-day trial key has been emailed.");
+            e.target.reset();
+        }
+
+        // Handle Contact Form Submit
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            closeModal('contactModal');
+            showToast("Message received! Our security team will respond shortly.");
+            e.target.reset();
+        }
+
+        // Comparison Section Switcher Data
+        const comparisonData = {
+            without: [
+                { title: "Panicked Searching", desc: "Thieves disable standard GPS in seconds by enabling Airplane mode.", icon: "fa-ban", color: "text-neonCoral" },
+                { title: "Financial Drain", desc: "Unauthorized Venmo, CashApp, and banking transfers happen before you get home.", icon: "fa-money-bill-transfer", color: "text-neonCoral" },
+                { title: "Leaked Personal Data", desc: "Private photos, messages, and social media passwords compromised.", icon: "fa-user-ninja", color: "text-neonCoral" },
+                { title: "Permanent Loss", desc: "High replacement cost of $1,000+ with zero recovery rate.", icon: "fa-circle-xmark", color: "text-neonCoral" }
+            ],
+            with: [
+                { title: "Instant Remote Lock", desc: "Unbypassable lock screen engages even without cellular service.", icon: "fa-shield-halved", color: "text-electricCyan" },
+                { title: "Automated Banking Freeze", desc: "Biometric vault locks down financial apps instantaneously.", icon: "fa-building-columns", color: "text-electricCyan" },
+                { title: "Intruder Evidence", desc: "Silent photo snapshot & live GPS pin sent to your emergency circle.", icon: "fa-camera-retro", color: "text-electricCyan" },
+                { title: "Rapid Recovery", desc: "Campus security or police guided directly to exact location.", icon: "fa-location-arrow", color: "text-electricCyan" }
+            ]
+        };
+
+        function switchComparison(type) {
+            const container = document.getElementById('comparisonContent');
+            const btnWithout = document.getElementById('toggleWithout');
+            const btnWith = document.getElementById('toggleWith');
+
+            if (type === 'without') {
+                btnWithout.className = "px-5 py-2 rounded-full text-xs font-bold transition bg-neonCoral text-white shadow-coralGlow";
+                btnWith.className = "px-5 py-2 rounded-full text-xs font-bold text-gray-400 hover:text-white transition";
+            } else {
+                btnWith.className = "px-5 py-2 rounded-full text-xs font-bold transition bg-electricCyan text-obsidian shadow-cyanGlow";
+                btnWithout.className = "px-5 py-2 rounded-full text-xs font-bold text-gray-400 hover:text-white transition";
+            }
+
+            const items = comparisonData[type];
+            container.innerHTML = items.map(item => `
+                <div class="p-5 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2">
+                    <div class="${item.color} text-2xl mb-2">
+                        <i class="fa-solid ${item.icon}"></i>
+                    </div>
+                    <h4 class="font-syne font-bold text-white text-sm">${item.title}</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">${item.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // Initialize Comparison
+        switchComparison('without');
+
+        // Billing Cycle Switcher
+        function setBilling(cycle) {
+            const btnMonthly = document.getElementById('btnMonthly');
+            const btnAnnual = document.getElementById('btnAnnual');
+            const priceStudent = document.getElementById('priceStudent');
+            const pricePro = document.getElementById('pricePro');
+            const priceCircle = document.getElementById('priceCircle');
+
+            if(cycle === 'annual') {
+                btnAnnual.className = "px-5 py-2 rounded-full text-xs font-bold bg-electricCyan text-obsidian shadow-cyanGlow transition flex items-center space-x-1";
+                btnMonthly.className = "px-5 py-2 rounded-full text-xs font-bold text-gray-400 hover:text-white transition";
+                
+                priceStudent.innerText = "$2.25";
+                pricePro.innerText = "$4.49";
+                priceCircle.innerText = "$7.49";
+                showToast("Annual discount applied! Saved 25%.");
+            } else {
+                btnMonthly.className = "px-5 py-2 rounded-full text-xs font-bold bg-electricCyan text-obsidian shadow-cyanGlow transition";
+                btnAnnual.className = "px-5 py-2 rounded-full text-xs font-bold text-gray-400 hover:text-white transition flex items-center space-x-1";
+                
+                priceStudent.innerText = "$2.99";
+                pricePro.innerText = "$5.99";
+                priceCircle.innerText = "$9.99";
+            }
+        }
+
+        // Simulator Logic
+        function runSimulation(action) {
+            const screen = document.getElementById('simScreen');
+            const icon = document.getElementById('simIcon');
+            const title = document.getElementById('simTitle');
+            const desc = document.getElementById('simDesc');
+            const badge = document.getElementById('simBadge');
+
+            if (action === 'lock') {
+                icon.className = "w-16 h-16 mx-auto rounded-full bg-electricCyan/20 border border-electricCyan text-electricCyan flex items-center justify-center text-2xl shadow-cyanGlow animate-bounce";
+                icon.innerHTML = '<i class="fa-solid fa-lock"></i>';
+                title.innerText = "PHONE GUARDIAN LOCK";
+                desc.innerText = "Device locked by owner. GPS broadcast active. Contact 1-800-555-GUARD.";
+                badge.className = "inline-block px-3 py-1 rounded-full text-[10px] font-mono bg-electricCyan/20 text-electricCyan border border-electricCyan/40";
+                badge.innerText = "STATUS: DEVICE LOCKED & TRACKED";
+                showToast("Simulation: Phone Remote Locked!");
+            } else if (action === 'siren') {
+                icon.className = "w-16 h-16 mx-auto rounded-full bg-vividPurple/20 border border-vividPurple text-vividPurple flex items-center justify-center text-2xl shadow-purpleGlow animate-pulse";
+                icon.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                title.innerText = "PIERCING SIREN ACTIVE";
+                desc.innerText = "110dB Siren sounding at maximum volume. Intruder selfie photo emailed.";
+                badge.className = "inline-block px-3 py-1 rounded-full text-[10px] font-mono bg-vividPurple/20 text-vividPurple border border-vividPurple/40";
+                badge.innerText = "STATUS: SIREN & SELFIE TRIGGERED";
+                showToast("Simulation: High-Decibel Siren Triggered!");
+            } else if (action === 'wipe') {
+                icon.className = "w-16 h-16 mx-auto rounded-full bg-neonCoral/20 border border-neonCoral text-neonCoral flex items-center justify-center text-2xl shadow-coralGlow";
+                icon.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+                title.innerText = "CRYPTO DATA VAULT WIPED";
+                desc.innerText = "Banking, Venmo, & photo caches safely purged. Cloud backup secured.";
+                badge.className = "inline-block px-3 py-1 rounded-full text-[10px] font-mono bg-neonCoral/20 text-neonCoral border border-neonCoral/40";
+                badge.innerText = "STATUS: SENSITIVE DATA WIPED";
+                showToast("Simulation: Cryptographic Vault Purged!", true);
+            } else {
+                icon.className = "w-16 h-16 mx-auto rounded-full bg-electricCyan/10 border border-electricCyan text-electricCyan flex items-center justify-center text-2xl";
+                icon.innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
+                title.innerText = "System Ready";
+                desc.innerText = "Select an action on the left to simulate PhoneGuardian response.";
+                badge.className = "inline-block px-3 py-1 rounded-full text-[10px] font-mono bg-gray-800 text-gray-300";
+                badge.innerText = "STATUS: IDLE & PROTECTED";
+            }
+        }
+    </script>
+</body>
+</html>
